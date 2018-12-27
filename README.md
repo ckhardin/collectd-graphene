@@ -42,3 +42,20 @@ This would provide a service on the localhost at
 [http://127.0.0.1:5000/graphql](http://127.0.0.1:5000/graphql) to
 access and run the basic queries.
 
+
+Frontend
+---
+
+The directory layout for this project was done with a
+[create-react-app](https://github.com/facebook/create-react-app/) tied to the
+backend flask server to create a full stack implementation.
+
+```bash
+sudo npm install -g get-graphql-schema
+sudo npm install -g create-react-app
+
+create-react-app frontend
+cd frontend
+npm install --save d3 relay-runtime react-relay react-faux-dom
+npm install --save-dev graphql relay-compiler babel-plugin-relay@dev babel-plugin-macros
+```
