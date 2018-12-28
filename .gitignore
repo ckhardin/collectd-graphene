@@ -6,3 +6,4 @@ __pycache__/
 env/
 dist/
 build/
+frontend/src/__generated__/

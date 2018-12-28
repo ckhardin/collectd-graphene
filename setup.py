@@ -10,6 +10,7 @@ class npmbuild_py(build_py):
         workdir = os.path.join(os.getcwd(), "frontend")
         if not self.dry_run:
             subprocess.check_call(['npm', 'install'], cwd=workdir)
+            subprocess.check_call(['npm', 'run', 'relay'], cwd=workdir)
             subprocess.check_call(['npm', 'run', 'build'], cwd=workdir)
             flask_frontend = os.path.join(self.build_lib,
                                           "collectd_graphene", "frontend")

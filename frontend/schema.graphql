@@ -1,0 +1,36 @@
+"""An object with an ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
+type Query {
+  """The ID of the object"""
+  node(id: ID!): Node
+  rrdfiles: [RRDFile]
+  rrdseries(path: String): [RRDSeries]
+}
+
+"""An rrdfile for parsing"""
+type RRDFile implements Node {
+  """The ID of the object."""
+  id: ID!
+  name: String
+  path: String
+}
+
+type RRDPair {
+  t: Float
+  v: Float
+}
+
+"""An rrdseries representation"""
+type RRDSeries implements Node {
+  """The ID of the object."""
+  id: ID!
+  label: String
+
+  """A lit of time/value pairs"""
+  sequence: [RRDPair]
+}
+
