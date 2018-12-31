@@ -1,0 +1,8 @@
+# Ignore the generated files
+__pycache__/
+*.pyc
+
+*.egg-info/
+env/
+dist/
+build/
