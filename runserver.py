@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from flaskrrd.app import create_app
+from collectd_graphene.app import create_app
 
 if __name__ == '__main__':
     _staticdir = os.path.join(os.getcwd(), "frontend", "build")

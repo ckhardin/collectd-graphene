@@ -9,7 +9,7 @@ from .schema import schema
 def create_app(**kwargs):
     # Adjust flask to service a "built" frontend
     app = Flask(__name__, **kwargs)
-    app.config.from_object('flaskrrd.config')
+    app.config.from_object('collectd_graphene.config')
 
     # create instance directory
     try:
