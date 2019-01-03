@@ -76,6 +76,11 @@ class ChartRenderer extends Component {
       .attr("transform", `translate(0, ${h - padding})`)
       .call(d3.axisBottom(x));
 
+    // y-axis
+    el.append('g')
+      .attr("transform", `translate(${padding}, 0)`)
+      .call(d3.axisLeft(y));
+
     return (<div className="chart-container">{this.props.chart}</div>)
   }
 }
