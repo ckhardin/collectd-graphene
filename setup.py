@@ -27,7 +27,7 @@ requirements=[
     'Flask-GraphQL==2.0.0',
     'Flask-Webpack==0.1.0',
     'graphene>=2.1.3',
-    'py-rrdtool'
+    'rrdtool>=0.1.10'
 ]
 
 setup(
