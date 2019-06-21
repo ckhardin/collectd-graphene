@@ -8,15 +8,14 @@ class RRDPair(graphene.ObjectType):
     t = graphene.Float()
     v = graphene.Float()
 
-
 class RRDSeries(graphene.ObjectType):
     """An rrdseries representation"""
 
     class Meta:
         interfaces = (relay.Node,)
 
-    label = graphene.String()
-    sequence = graphene.List(RRDPair, description="A lit of time/value pairs")
+    name = graphene.String()
+    sequence = graphene.List(RRDPair, description="List of time/value pairs")
 
     @classmethod
     def get_node(cls, info, id_):
@@ -41,7 +40,6 @@ class RRDFile(graphene.ObjectType):
         f = get_rrdfile(id_, info['path'])
         return RRDFile(id=f.inum,name=f.name,path=f.path)
 
-
 class RRDFileConnection(relay.Connection):
     class Meta:
         node = RRDFile
@@ -58,13 +56,13 @@ class Query(graphene.ObjectType):
 
     def resolve_rrdseries(self, info, path):
         if path:
-           i = 0
            _rrdseries = []
            _series = get_rrdseries(path)
-           for x,y in sorted(_series.iteritems()):
-               _sequence = [RRDPair(t=float(p['t']), v=float(p['v'])) for p in y]
-               _rrdseries.append(RRDSeries(id=i,label=x,sequence=_sequence))
-               i += 1
+           for s in _series:
+               _sequence = [RRDPair(t=float(p['t']), v=float(p['v']))
+                            for p in s.get('sequence', [])]
+               _rrdseries.append(RRDSeries(id=s['index'],name=s['name'],
+                                           sequence=_sequence))
            return _rrdseries
         return []
 

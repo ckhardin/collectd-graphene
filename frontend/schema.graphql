@@ -1,4 +1,3 @@
-"""An object with an ID"""
 interface Node {
   """The ID of the object."""
   id: ID!
@@ -28,9 +27,8 @@ type RRDPair {
 type RRDSeries implements Node {
   """The ID of the object."""
   id: ID!
-  label: String
+  name: String
 
-  """A lit of time/value pairs"""
+  """List of time/value pairs"""
   sequence: [RRDPair]
 }
-

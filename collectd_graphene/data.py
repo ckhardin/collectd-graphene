@@ -21,20 +21,22 @@ def get_rrdseries(path, start_time=None, end_time=None, CF="AVERAGE"):
         int(end_time)
         _rrdargs.extend(["-e", "{}".format(end_time)])
 
-    _series = {}
+    _series = []
     _path = os.path.normpath(path)
     if not os.path.isabs(_path):
         _path = os.path.join(RRDPATH, _path)
     try:
         _meta, _name, _data = rrdtool.fetch(str(_path), str(CF), *_rrdargs)
         istart, iend, istep = _meta
-        for n in _name:
-            _series[n] = []
-        for i, vals in enumerate(_data):
+        for i,n in enumerate(_name):
+            _series.append({ 'index': i, 'name': n, 'sequence': [] })
+        for i,vals in enumerate(_data):
+            _t = istart + i * istep
             for j in range(len(_name)):
                 if vals[j] != None:
-                    _pair = { "t": istart + i * istep, "v": vals[j]}
-                    _series[_name[j]].append(_pair)
+                    assert(_series[j].get('name') == _name[j])
+                    _pair = { "t": _t, "v": vals[j] }
+                    _series[j]['sequence'].append(_pair)
     except Exception as excn:
         print str(excn)
         pass

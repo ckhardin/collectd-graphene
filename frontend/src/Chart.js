@@ -19,7 +19,7 @@ class Chart extends Component {
         query={graphql`
           query ChartQuery($rrdpath: String) {
             rrdseries(path: $rrdpath) {
-              label, sequence {t, v}
+              name, sequence {t, v}
             }
           }
         `}
