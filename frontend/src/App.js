@@ -9,7 +9,7 @@ const graphql = require('babel-plugin-relay/macro');
 
 class App extends Component {
   state = {
-          rrdpath: null,
+          pluginpath: null,
           refresh: null,
   }
 
@@ -32,7 +32,7 @@ class App extends Component {
           environment={environment}
           query={graphql`
             query AppQuery {
-              rrdfiles {
+              plugins {
                 id, name, path
               }
             }
@@ -45,24 +45,25 @@ class App extends Component {
             if (!props) {
               return <div>Loading...</div>;
             }
-            const rrdfiles = props.rrdfiles
-            const listoptions = rrdfiles.map((rrdfile, index) =>
-                  <option value={rrdfile.path}>{index} - {rrdfile.path}</option>
+            const plugins = props.plugins
+            const listoptions = plugins.map((plugin, index) =>
+                  <option value={plugin.path}>{index} - {plugin.path}</option>
             );
             return(
               <div className="selector">
                 <form onSubmit={this.onSubmit}>
-                <label htmlFor="rrdSelect">Select an RRDFile:</label>
-                <select id="rrdSelect" name="rrdpath"
-                      onChange={this.onChange} value={this.state.rrdpath||"default"}>
+                <label htmlFor="pluginSelect">Select a Collectd Plugin:</label>
+                <select id="pluginSelect" name="pluginpath"
+                      onChange={this.onChange}
+                      value={this.state.plugininstnace||"default"}>
                   <option disabled value="default">choose</option>
                   {listoptions}
                 </select>
                 <button type="submit">reload</button>
                 </form>
                 <Chart
-                  className='rrdchart'
-                  rrdpath={this.state.rrdpath}
+                  className='pluginchart'
+                  pluginpath={this.state.pluginpath}
                   refresh={this.state.refresh}
                 />
               </div>

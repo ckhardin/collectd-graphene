@@ -1,6 +1,23 @@
+"""An object with an ID"""
 interface Node {
   """The ID of the object."""
   id: ID!
+}
+
+type PluginData implements Node {
+  """The ID of the object."""
+  id: ID!
+  plugin: String
+  instance: String
+  series: [RRDSeries]
+}
+
+"""Represents a plugin instance the directory data"""
+type PluginInstance implements Node {
+  """The ID of the object."""
+  id: ID!
+  name: String
+  path: String
 }
 
 type Query {
@@ -8,6 +25,8 @@ type Query {
   node(id: ID!): Node
   rrdfiles: [RRDFile]
   rrdseries(path: String): [RRDSeries]
+  plugins: [PluginInstance]
+  plugindata(path: String): PluginData
 }
 
 """An rrdfile for parsing"""

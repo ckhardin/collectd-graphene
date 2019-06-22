@@ -8,7 +8,7 @@ const graphql = require('babel-plugin-relay/macro');
 
 class Chart extends Component {
   static propTypes = {
-    rrdpath: React.PropTypes.string,
+    pluginpath: React.PropTypes.string,
     refresh: React.PropTypes.number,
   };
 
@@ -17,20 +17,25 @@ class Chart extends Component {
       <QueryRenderer
         environment={environment}
         query={graphql`
-          query ChartQuery($rrdpath: String) {
-            rrdseries(path: $rrdpath) {
-              name, sequence {t, v}
+          query ChartQuery($pluginpath: String) {
+            plugindata(path: $pluginpath) {
+              plugin, instance, series { name, sequence {t, v} }
             }
           }
         `}
-        variables={{ rrdpath: this.props.rrdpath,
+        variables={{ pluginpath: this.props.pluginpath,
                      refresh: this.props.refresh
         }}
         render={({error, props}) => {
           if (error) {
             return <div>Error!</div>;
           }
-          return <ChartRenderer data={props} />;
+          if (props && props.plugindata) {
+            return <ChartRenderer plugin={props.plugindata.plugin}
+                                  instance={props.plugindata.instance}
+                                  series={props.plugindata.series} />;
+          }
+          return <div/>;
         }}
       />
     );
