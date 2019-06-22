@@ -22,7 +22,9 @@ def get_rrdseries(path, start_time=None, end_time=None, CF="AVERAGE"):
         _rrdargs.extend(["-e", "{}".format(end_time)])
 
     _series = {}
-    _path = os.path.join(RRDPATH, path)
+    _path = os.path.normpath(path)
+    if not os.path.isabs(_path):
+        _path = os.path.join(RRDPATH, _path)
     try:
         _meta, _name, _data = rrdtool.fetch(str(_path), str(CF), *_rrdargs)
         istart, iend, istep = _meta
