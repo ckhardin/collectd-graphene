@@ -23,7 +23,7 @@ class npmbuild_py(build_py):
 
 # keep in sync with requirements.txt
 requirements=[
-    'Flask==1.0.2',
+    'Flask==2.3.2',
     'Flask-GraphQL==2.0.0',
     'Flask-Webpack==0.1.0',
     'graphene>=2.1.3',
